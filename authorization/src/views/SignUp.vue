@@ -2,6 +2,7 @@
 import {ref} from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import {useAuthStore} from  '../stores/auth';
+import FormInput from '@/components/FormInput.vue';
 
 const authStore = useAuthStore();
 
@@ -22,11 +23,11 @@ const signup = async () => {
             <div class="error" v-if="authStore.error">{{ authStore.error }}</div>
             <div class="in">
                 <label for="#email">Set <span class="second-color">email</span></label>
-                <input type="email" v-model="email" class="form-input">
+                <FormInput type="email" v-model="email" placeholder="e-mail"/>
             </div>
             <div class="in">
                 <label for="#password">Set <span class="second-color">password</span></label>
-                <input type="password" v-model="password" class="form-input">
+                <FormInput type="password" v-model="password" placeholder="password"/>
             </div>
         <button class="btn second-bg-color body-color" @click="signup" type="button">SignUp</button>
     </form>
@@ -48,12 +49,7 @@ const signup = async () => {
     padding: 0.4em;
     border-radius: 1rem;
 }
-.form-input{
-    width: 50%;
-    padding: 0.6em;
-    border-radius: 1rem;
-    border: 3px solid #71d316;
-}
+
 .screen{
     display: flex;
     width: 100%;

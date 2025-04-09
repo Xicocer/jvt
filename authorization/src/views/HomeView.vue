@@ -1,18 +1,12 @@
+<script setup>
+import FormInput from '@/components/FormInput.vue';
+</script>
+
 <template>
     <div>
-        
+        <FormInput placeholder="e-mail"/>
     </div>
 </template>
-
-<script>
-export default {
-    setup () {
-        
-
-        return {}
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 
