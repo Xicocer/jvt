@@ -1,10 +1,10 @@
 <script setup>
-import FormInput from '@/components/FormInput.vue';
+import FormButton from '@/components/FormButton.vue';
 </script>
 
 <template>
     <div>
-        <FormInput placeholder="e-mail"/>
+        <FormButton text="Sign In"/>
     </div>
 </template>
 

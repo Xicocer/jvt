@@ -3,6 +3,7 @@ import {ref} from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import {useAuthStore} from  '../stores/auth';
 import FormInput from '@/components/FormInput.vue';
+import FormButton from '@/components/FormButton.vue';
 
 const authStore = useAuthStore();
 
@@ -29,7 +30,7 @@ const signup = async () => {
                 <label for="#password">Set <span class="second-color">password</span></label>
                 <FormInput type="password" v-model="password" placeholder="password"/>
             </div>
-        <button class="btn second-bg-color body-color" @click="signup" type="button">SignUp</button>
+        <FormButton @click="signup" type="button" text="Sign in"/>
     </form>
     <p>If you are already registred <RouterLink to="/signin" class="link">Log in</RouterLink></p>
     </div>
@@ -42,17 +43,8 @@ const signup = async () => {
     border-radius: 1rem;
 }
 
-.btn{
-    outline: none;
-    border: none;
-    margin: 1%;
-    padding: 0.4em;
-    border-radius: 1rem;
-}
-
 .screen{
     display: flex;
-    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -61,11 +53,12 @@ const signup = async () => {
     display: flex;
     flex-direction: column;
     width: 30%;
+    justify-content: center;
 
 }
 .in{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-top: 1em;
 }
 </style>

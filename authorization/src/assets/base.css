@@ -11,7 +11,7 @@ input{
 }
 
 .second-color{
-    color: #71d316;
+    color: #16d384;
 }
 
 .body-color{
@@ -23,9 +23,22 @@ input{
 }
 
 .second-bg-color{
-    background-color: #71d316;;
+    background-color:#16d384;;
 }
 
 .link{
     color: #16c0d3;
+    text-decoration: none;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
+
+.link:focus{
+    outline: none;
+    border: 2px solid #16d384;
+    padding: 0.2rem;
+    transition: 500ms;
+    border-radius: 0.2rem;
 }

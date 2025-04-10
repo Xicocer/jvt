@@ -3,13 +3,18 @@ const props = defineProps({
     placeholder:{
         type: String,
         required: true
+    },
+    type:{
+        type:String,
+        required:true,
+        default:"text",
     }
 })
 </script>
 
 <template>
     <div class="input-container">
-        <input type="email" :placeholder="placeholder" class="form-input">
+        <input :type="type" :placeholder="placeholder" class="form-input">
     </div>
 </template>
 
@@ -26,14 +31,18 @@ const props = defineProps({
     transition: 500ms;
 
     &:focus{
-        border: 2px solid #71d316;
-        caret-color: #71d316;
-        color: #b5ff6f;
-        
+        border: 2px solid #16d384;
+        caret-color: #16d384;
+        color: #ffffff;
+        font-size: 1.1vw;
     }
 
     &::placeholder{
         color: #fff;
+    }
+
+    &:hover{
+        font-size: 1.1vw;
     }
 }
 </style>
