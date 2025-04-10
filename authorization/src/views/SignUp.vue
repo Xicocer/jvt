@@ -2,8 +2,10 @@
 import {ref} from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import {useAuthStore} from  '../stores/auth';
+
 import FormInput from '@/components/FormInput.vue';
 import FormButton from '@/components/FormButton.vue';
+import ErrorBlock from '@/components/ErrorBlock.vue';
 
 const authStore = useAuthStore();
 
@@ -21,7 +23,7 @@ const signup = async () => {
     <div class="screen">
         <h2>Sign <span class="second-color">Up</span></h2>
         <form class="sign" >
-            <div class="error" v-if="authStore.error">{{ authStore.error }}</div>
+            
             <div class="in">
                 <label for="#email">Set <span class="second-color">email</span></label>
                 <FormInput type="email" v-model="email" placeholder="e-mail"/>
@@ -31,6 +33,7 @@ const signup = async () => {
                 <FormInput type="password" v-model="password" placeholder="password"/>
             </div>
         <FormButton @click="signup" type="button" text="Sign in"/>
+        <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
     </form>
     <p>If you are already registred <RouterLink to="/signin" class="link">Log in</RouterLink></p>
     </div>

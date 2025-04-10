@@ -1,10 +1,11 @@
 <script setup>
 import FormButton from '@/components/FormButton.vue';
+import ErrorBlock from '@/components/ErrorBlock.vue';
 </script>
 
 <template>
     <div>
-        <FormButton text="Sign In"/>
+        <ErrorBlock error="Error"/>
     </div>
 </template>
 
