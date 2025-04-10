@@ -20,6 +20,9 @@ const signup = async () => {
 </script>
 
 <template>
+    <div>
+        
+    </div>
     <div class="screen">
         <h2>Sign <span class="second-color">Up</span></h2>
         <form class="sign" >
@@ -32,8 +35,10 @@ const signup = async () => {
                 <label for="#password">Set <span class="second-color">password</span></label>
                 <FormInput type="password" v-model="password" placeholder="password"/>
             </div>
-        <FormButton @click="signup" type="button" text="Sign in"/>
-        <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
+        <FormButton @click="signup" type="button" text="Sign up!"/>
+        <transition name="fade-error">
+            <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
+        </transition>
     </form>
     <p>If you are already registred <RouterLink to="/signin" class="link">Log in</RouterLink></p>
     </div>
@@ -63,5 +68,22 @@ const signup = async () => {
     display: flex;
     flex-direction: column;
     margin-top: 1em;
+}
+
+.fade-error-enter-active,
+.fade-error-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-error-enter-from,
+.fade-error-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.fade-error-enter-to,
+.fade-error-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>
