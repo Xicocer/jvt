@@ -3,6 +3,10 @@ import {ref} from 'vue';
 import {useAuthStore} from  '../stores/auth';
 import { useRouter } from 'vue-router';
 
+import FormInput from '@/components/FormInput.vue';
+import FormButton from '@/components/FormButton.vue';
+import ErrorBlock from '@/components/ErrorBlock.vue';
+
 const authStore = useAuthStore();
 
 const email = ref();
@@ -17,46 +21,28 @@ const signin = async () => {
 
 <template>
     <div class="screen">
-        <h2>Sign <span class="second-color">In</span></h2>
+        <h2>Log <span class="second-color">In</span></h2>
         <form class="sign" >
-            <div class="error" v-if="authStore.error">{{ authStore.error }}</div>
             <div class="in">
                 <label for="#email">Enter your <span class="second-color">email</span></label>
-                <input type="email" v-model="email" class="form-input">
+                <FormInput type="email" v-model="email" placeholder="e-mail"/>
             </div>
             <div class="in">
                 <label for="#password">Enter your <span class="second-color">password</span></label>
-                <input type="password" v-model="password" class="form-input">
+                <FormInput type="password" v-model="password" placeholder="password"/>
             </div>
-        <button class="btn second-bg-color body-color" @click="signin" type="button">SignIn</button>
+            <FormButton @click="signin" type="button" text="Sign up!"/>
+            <transition name="fade-error">
+                <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
+            </transition>
     </form>
     <p>if you are not registered yet <RouterLink to="/sign" class="link">Reg in</RouterLink></p>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.error{
-    border: 3px solid #d38116;
-    padding: 1%;
-    border-radius: 1rem;
-}
-
-.btn{
-    outline: none;
-    border: none;
-    margin: 1%;
-    padding: 0.4em;
-    border-radius: 1rem;
-}
-.form-input{
-    width: 50%;
-    padding: 0.6em;
-    border-radius: 1rem;
-    border: 3px solid #71d316;
-}
 .screen{
     display: flex;
-    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -65,11 +51,29 @@ const signin = async () => {
     display: flex;
     flex-direction: column;
     width: 30%;
+    justify-content: center;
 
 }
 .in{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-top: 1em;
+}
+
+.fade-error-enter-active,
+.fade-error-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-error-enter-from,
+.fade-error-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.fade-error-enter-to,
+.fade-error-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>

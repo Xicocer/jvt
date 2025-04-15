@@ -1,0 +1,22 @@
+{
+  "name": "fuckingrest",
+  "version": "1.0.0",
+  "description": "it try to build rest api from my project",
+  "license": "ISC",
+  "author": "",
+  "type": " ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prisma": "^6.6.0"
+  }
+}

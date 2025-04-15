@@ -1,11 +1,10 @@
 <script setup>
-import FormButton from '@/components/FormButton.vue';
-import ErrorBlock from '@/components/ErrorBlock.vue';
+import ToggelComponent from '@/components/ToggelComponent.vue';
 </script>
 
 <template>
     <div>
-        <ErrorBlock error="Error"/>
+        <ToggelComponent/>
     </div>
 </template>
 

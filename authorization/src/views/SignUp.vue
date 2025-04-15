@@ -45,12 +45,6 @@ const signup = async () => {
 </template>
 
 <style lang="scss" scoped>
-.error{
-    border: 3px solid #d38116;
-    padding: 1%;
-    border-radius: 1rem;
-}
-
 .screen{
     display: flex;
     flex-direction: column;
