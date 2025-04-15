@@ -14,10 +14,4 @@ const start = () => {
 }
 
 
-app.get('/gg', (req, res) => {
-    const query = "SELECT * FROM users";
-
-    
-});
-
 start()

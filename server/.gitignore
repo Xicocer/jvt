@@ -27,5 +27,11 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+*.sql
+
+generated
+
+prisma/migrations/*
+!prisma/schema.prisma
 
 *.tsbuildinfo
