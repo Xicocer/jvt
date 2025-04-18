@@ -24,12 +24,27 @@ const signup = async () => {
         
     </div>
     <div class="screen">
-        <h2>Sign <span class="second-color">Up</span></h2>
+        <h2>Регистрация</h2>
         <form class="sign" >
-            
+            <div class="in">
+                <label for="#email">Ваше имя</label>
+                <FormInput type="email" v-model="email" placeholder="Полное имя"/>
+            </div>
+            <div class="in">
+                <label for="#email">Ваша фамилия</label>
+                <FormInput type="email" v-model="email" placeholder="Фамилия"/>
+            </div>
+            <div class="in">
+                <label for="#email">Отчество <span class="second-color">(необязательно)</span></label>
+                <FormInput type="email" v-model="email" placeholder="Отчество (необязательно)"/>
+            </div>
             <div class="in">
                 <label for="#email">Set <span class="second-color">email</span></label>
                 <FormInput type="email" v-model="email" placeholder="e-mail"/>
+            </div>
+            <div class="in">
+                <label for="#email">Set <span class="second-color">email</span></label>
+                <FormInput type="file" v-model="email" placeholder="e-mail"/>
             </div>
             <div class="in">
                 <label for="#password">Set <span class="second-color">password</span></label>
