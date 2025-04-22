@@ -7,55 +7,73 @@ import FormInput from '@/components/FormInput.vue';
 import FormButton from '@/components/FormButton.vue';
 import ErrorBlock from '@/components/ErrorBlock.vue';
 
+const router = useRouter();
 const authStore = useAuthStore();
 
-const email = ref();
-const password = ref();
-const router = useRouter();
+const firstName = ref('')
+const lastName = ref('')
+const patronymic = ref('')
+const email = ref('')
+const password = ref('')
+const img = ref(null)
+
 
 const signup = async () => {
-    await authStore.auth({email: email.value, password: password.value}, 'signup') 
-    router.push('/MainMap');
+    const userData = {
+        first_name:firstName.value,
+        last_name:lastName.value,
+        patronymic:patronymic.value || null,
+        email:email.value,
+        password:password.value,
+        img:img.value || null,
+    };
+
+    console.log(firstName.value);
+
+    const success = await authStore.register(userData)
+
+    if (success) {
+      router.push('/MainMap')
+    }
+
 }
 </script>
 
 <template>
-    <div>
-        
-    </div>
-    <div class="screen">
+    <div class="screen" @submit.prevent="signup">
         <h2>Регистрация</h2>
-        <form class="sign" >
-            <div class="in">
-                <label for="#email">Ваше имя</label>
-                <FormInput type="email" v-model="email" placeholder="Полное имя"/>
-            </div>
-            <div class="in">
-                <label for="#email">Ваша фамилия</label>
-                <FormInput type="email" v-model="email" placeholder="Фамилия"/>
-            </div>
-            <div class="in">
-                <label for="#email">Отчество <span class="second-color">(необязательно)</span></label>
-                <FormInput type="email" v-model="email" placeholder="Отчество (необязательно)"/>
-            </div>
-            <div class="in">
-                <label for="#email">Set <span class="second-color">email</span></label>
-                <FormInput type="email" v-model="email" placeholder="e-mail"/>
-            </div>
-            <div class="in">
-                <label for="#email">Set <span class="second-color">email</span></label>
-                <FormInput type="file" v-model="email" placeholder="e-mail"/>
-            </div>
-            <div class="in">
-                <label for="#password">Set <span class="second-color">password</span></label>
-                <FormInput type="password" v-model="password" placeholder="password"/>
-            </div>
-        <FormButton @click="signup" type="button" text="Sign up!"/>
-        <transition name="fade-error">
-            <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
-        </transition>
-    </form>
-    <p>If you are already registred <RouterLink to="/signin" class="link">Log in</RouterLink></p>
+        <form class="sign">
+  <div class="in">
+    <label>Ваше имя</label>
+    <FormInput v-model="firstName" placeholder="Имя"/>
+  </div>
+  <div class="in">
+    <label>Ваша фамилия</label>
+    <FormInput v-model="lastName" placeholder="Фамилия"/>
+  </div>
+  <div class="in">
+    <label>Отчество <span class="second-color">(необязательно)</span></label>
+    <FormInput v-model="patronymic" placeholder="Отчество"/>
+  </div>
+  <div class="in">
+    <label>Аватар (ссылка)</label>
+    <FormInput v-model="img" placeholder="Ссылка на изображение"/>
+  </div>
+  <div class="in">
+    <label>Email</label>
+    <FormInput type="email" v-model="email" placeholder="e-mail"/>
+  </div>
+  <div class="in">
+    <label>Придумайте пароль</label>
+    <FormInput type="password" v-model="password" placeholder="Пароль"/>
+  </div>
+  
+  <FormButton @click="signup" type="submit" text="Sign up!"/>
+
+  <transition name="fade-error">
+    <ErrorBlock v-if="error" :error="error" />
+  </transition>
+</form>
     </div>
 </template>
 

@@ -14,71 +14,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user{
-  id  Int  @id @default(autoincrement())
-  first_name  String @db.VarChar(50)
-  last_name String  @db.VarChar(50)
-  patronymic  String? @db.VarChar(50)
-  email String @unique 
-  password  String @db.Text
-  img String? @db.Text
-  created_at DateTime @default(now())
+model user {
+  id         Int          @id @default(autoincrement()) 
+  first_name String       @db.VarChar(50)
+  last_name  String       @db.VarChar(50)
+  patronymic String?      @db.VarChar(50)
+  email      String       @unique
+  password   String       @db.Text
+  img        String?      @db.Text
+  created_at DateTime     @default(now())
   MapMarkers MapMarkers[]
-  user_pets user_pets[]
-  messages messages[]
+  user_pets  user_pets[]
+  messages   messages[]
+  refresh    refresh[]
 }
 
-model MapMarkers{
-  id Int @id @default(autoincrement()) 
-  name String @db.Text
-  type String @db.VarChar(30)
-  address String @db.Text
-  latitube Decimal @db.Decimal(9,6)
-  longitube Decimal @db.Decimal(9,6)
-  img String? @db.Text
-  user user? @relation(fields: [user_id], references: [id])
-  user_id Int?
+model MapMarkers {
+  id         Int      @id @default(autoincrement()) 
+  name       String   @db.Text
+  type       String   @db.VarChar(30)
+  address    String   @db.Text
+  latitube   Decimal  @db.Decimal(9, 6)
+  longitube  Decimal  @db.Decimal(9, 6)
+  img        String?  @db.Text
+  user       user?    @relation(fields: [user_id], references: [id])
+  user_id    Int?
   created_at DateTime @default(now())
 }
 
-model user_pets{
-  id Int @id @default(autoincrement())
-  name String @db.Text
-  age Int @db.TinyInt
-  gender Boolean
-  user user? @relation(fields: [user_id], references: [id])
+model user_pets {
+  id      Int     @id @default(autoincrement()) 
+  name    String  @db.Text
+  age     Int     @db.TinyInt
+  gender  Boolean
+  user    user?   @relation(fields: [user_id], references: [id])
   user_id Int?
+  breed   breed[]
+}
+
+model pet {
+  id    Int     @id @default(autoincrement()) 
+  name  String  @db.Text
   breed breed[]
 }
 
-model pet{
-  id BigInt @id @default(autoincrement()) @db.BigInt
-  name String @db.Text
-  breed breed[]
-}
-
-model breed{
-  id Int @id @default(autoincrement()) 
-  name String @db.Text
-  pet pet? @relation(fields: [pet_id], references: [id])
-  pet_id BigInt?
-  user_pets user_pets? @relation(fields: [user_pets_id], references: [id])
+model breed {
+  id           Int        @id @default(autoincrement()) 
+  name         String     @db.Text
+  pet          pet?       @relation(fields: [pet_id], references: [id])
+  pet_id       Int?
+  user_pets    user_pets? @relation(fields: [user_pets_id], references: [id])
   user_pets_id Int?
 }
 
-model chat{
-  id Int @id @default(autoincrement())
-  name String @db.Text
-  type Boolean
+model chat {
+  id       Int        @id @default(autoincrement()) 
+  name     String     @db.Text
+  type     Boolean
   messages messages[]
 }
 
-
-model messages{
-  id Int @id @default(autoincrement()) 
+model messages {
+  id      Int    @id @default(autoincrement()) 
   content String @db.Text
-  user user? @relation(fields: [user_id], references: [id])
+  user    user?  @relation(fields: [user_id], references: [id])
   user_id Int?
-  chat chat? @relation(fields: [chat_id], references: [id])
+  chat    chat?  @relation(fields: [chat_id], references: [id])
   chat_id Int?
+}
+
+model refresh {
+  id           Int    @id @default(autoincrement())
+  refreshtoken String @db.Text
+  user         user?  @relation(fields: [user_id], references: [id])
+  user_id      Int
 }

@@ -1,21 +1,40 @@
 <script setup>
 const props = defineProps({
-    placeholder:{
-        type: String,
-        required: true
-    },
-    type:{
-        type:String,
-        required:true,
-        default:"text",
-    }
+  modelValue: {
+    type: [String, File, null],
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    default: 'text',
+  },
 })
+
+const emit = defineEmits(['update:modelValue'])
+
+const handleInput = (event) => {
+  if (props.type === 'file') {
+    emit('update:modelValue', event.target.files[0]) // отправляем файл
+  } else {
+    emit('update:modelValue', event.target.value) // обычное текстовое значение
+  }
+}
 </script>
 
 <template>
-    <div class="input-container">
-        <input :type="type" :placeholder="placeholder" class="form-input">
-    </div>
+  <div class="input-container">
+    <input
+      :type="type"
+      :placeholder="placeholder"
+      class="form-input"
+      @input="handleInput"
+      @change="handleInput"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
