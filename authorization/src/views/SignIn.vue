@@ -21,22 +21,22 @@ const signin = async () => {
 
 <template>
     <div class="screen">
-        <h2>Log <span class="second-color">In</span></h2>
+        <h2>Вход</h2>
         <form class="sign" >
             <div class="in">
-                <label for="#email">Enter your <span class="second-color">email</span></label>
+                <label for="#email">Введите ваш <span class="second-color">email</span></label>
                 <FormInput type="email" v-model="email" placeholder="e-mail"/>
             </div>
             <div class="in">
-                <label for="#password">Enter your <span class="second-color">password</span></label>
-                <FormInput type="password" v-model="password" placeholder="password"/>
+                <label for="#password">Введите ваш <span class="second-color">пароль</span></label>
+                <FormInput type="password" v-model="password" placeholder="Пароль"/>
             </div>
-            <FormButton @click="signin" type="button" text="Sign up!"/>
+            <FormButton @click="signin" type="button" text="Войти"/>
             <transition name="fade-error">
                 <ErrorBlock v-if="authStore.error" :error="authStore.error"/>
             </transition>
     </form>
-    <p>if you are not registered yet <RouterLink to="/sign" class="link">Reg in</RouterLink></p>
+    <p>Еще не зарегестрированны? <RouterLink to="/sign" class="link">Зарегестрируйтесь</RouterLink></p>
     </div>
 </template>
 

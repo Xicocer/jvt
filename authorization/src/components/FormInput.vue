@@ -18,9 +18,9 @@ const emit = defineEmits(['update:modelValue'])
 
 const handleInput = (event) => {
   if (props.type === 'file') {
-    emit('update:modelValue', event.target.files[0]) // отправляем файл
+    emit('update:modelValue', event.target.files[0])
   } else {
-    emit('update:modelValue', event.target.value) // обычное текстовое значение
+    emit('update:modelValue', event.target.value)
   }
 }
 </script>
@@ -48,6 +48,7 @@ const handleInput = (event) => {
     background-color: #5f5f5f;
     border: 2px solid #5f5f5f;
     transition: 500ms;
+    color:#fff;
 
     &:focus{
         border: 2px solid #16d384;

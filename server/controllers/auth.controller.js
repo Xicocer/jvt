@@ -26,17 +26,20 @@ const register = async (req, res) => {
             },
         })
 
-        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {
+        const accessToken = jwt.sign({userId: user.id, userRole:user.role}, process.env.JWT_SECRET, {
             expiresIn: '3h',
         });
 
-        res.cookie('token', token,{
+        res.cookie('access_token', accessToken,{
             httpOnly:true,
             maxAge:3*60*60*1000,
             sameSite:"lax",
         })
 
-        res.status(201).json({message:"Регистрация прошла усешно"});
+        res.status(201).json({
+            message:"Регистрация прошла усешно",
+            accessToken:accessToken
+        });
     }catch (error){
         console.error(error)
         res.status(500).json({message:'Ошибка сервера'})

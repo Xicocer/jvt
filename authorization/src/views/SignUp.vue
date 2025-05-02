@@ -52,12 +52,8 @@ const signup = async () => {
     <FormInput v-model="lastName" placeholder="Фамилия"/>
   </div>
   <div class="in">
-    <label>Отчество <span class="second-color">(необязательно)</span></label>
+    <label>Отчество <span class="second-color">(если есть)</span></label>
     <FormInput v-model="patronymic" placeholder="Отчество"/>
-  </div>
-  <div class="in">
-    <label>Аватар (ссылка)</label>
-    <FormInput v-model="img" placeholder="Ссылка на изображение"/>
   </div>
   <div class="in">
     <label>Email</label>
@@ -74,6 +70,7 @@ const signup = async () => {
     <ErrorBlock v-if="error" :error="error" />
   </transition>
 </form>
+<p>Уже зарегестрированны? <RouterLink to="/signin" class="link">Войдите</RouterLink></p>
     </div>
 </template>
 
