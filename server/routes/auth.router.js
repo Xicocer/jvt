@@ -8,6 +8,7 @@ const {addPet} = require('../controllers/add_pet.controller')
 const {getPets} = require('../controllers/list_pets.controller')
 const {deletePet} = require('../controllers/delet_pet.controller')
 const {authMidlware} = require('../middleware/auth.middleware')
+const {getProfile} = require('../controllers/profile.controller')
 
 
 router.post('/register', register)
@@ -17,6 +18,7 @@ router.post('/logout', logout)
 router.post('/addPet', addPet)
 
 router.get('/pets', getPets)
+router.get('/profile', authMidlware, getProfile)
 
 router.delete('/delPet/:id', authMidlware, deletePet)
 module.exports = router

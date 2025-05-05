@@ -7,8 +7,6 @@ const deletePet = async (req, res) => {
         const petId = parseInt(req.params.id)
         const userId = req.user.userId
 
-        console.log('req.user.id:', userId)
-
         if (isNaN(petId)) {
             return res.status(400).json({message:"Неверный id питомца"})
         }
