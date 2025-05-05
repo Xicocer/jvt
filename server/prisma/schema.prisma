@@ -24,6 +24,7 @@ model user {
   img        String?      @db.Text
   role       Boolean      @default(false)
   created_at DateTime     @default(now())
+  support    support[]
   MapMarkers MapMarkers[]
   user_pets  user_pets[]
   messages   messages[]
@@ -44,13 +45,13 @@ model MapMarkers {
 }
 
 model user_pets {
-  id       Int    @id @default(autoincrement())
-  name     String @db.Text
-  age      Int    @db.TinyInt
+  id       Int     @id @default(autoincrement())
+  name     String  @db.Text
+  age      Int     @db.TinyInt
   gender   Boolean
-  user     user?  @relation(fields: [user_id], references: [id])
+  user     user?   @relation(fields: [user_id], references: [id])
   user_id  Int?
-  breed    breed  @relation(fields: [breed_id], references: [id])
+  breed    breed   @relation(fields: [breed_id], references: [id])
   breed_id Int
 }
 
@@ -61,11 +62,11 @@ model pet {
 }
 
 model breed {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.Text
-  pet      pet        @relation(fields: [pet_id], references: [id])
-  pet_id   Int
-  pets     user_pets[]
+  id     Int         @id @default(autoincrement())
+  name   String      @db.Text
+  pet    pet         @relation(fields: [pet_id], references: [id])
+  pet_id Int
+  pets   user_pets[]
 }
 
 model chat {
@@ -89,4 +90,13 @@ model refresh {
   refreshtoken String @db.Text
   user         user?  @relation(fields: [user_id], references: [id])
   user_id      Int
+}
+
+model support {
+  id         Int      @id @default(autoincrement())
+  message    String   @db.Text
+  type       String   @db.VarChar(50)
+  created_at DateTime @default(now())
+  user       user?    @relation(fields: [user_id], references: [id])
+  user_id    Int?
 }
