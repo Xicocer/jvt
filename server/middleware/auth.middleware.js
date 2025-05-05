@@ -11,6 +11,7 @@ const authMidlware = (req, res, next) => {
         }
 
         const decoded = jwt.verify(access_token, process.env.JWT_SECRET)
+        req.user = decoded;
 
         next()
     }catch(error){
