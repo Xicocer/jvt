@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 
 const getProfile =async (req, res) =>{
     try{
+        console.log(req.user.userRole)
         const userId = req.user.userId
 
         const user = await prisma.user.findUnique({
