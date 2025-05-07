@@ -3,6 +3,7 @@ const viewsRoutes = require('./routes/views.routes')
 const express = require('express');
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const {query} = require('express-validator')
 
 const PORT = process.env.PORT || 5000;
 

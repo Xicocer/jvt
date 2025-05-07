@@ -12,7 +12,7 @@ const {getProfile} = require('../controllers/profile.controller')
 const {sendSupportMessage} = require('../controllers/support_message.controller')
 const {adminMidlware} = require('../middleware/admin.midleware')
 const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = require('../controllers/list_support.controller')
-
+const {changeProfile} = require('../controllers/change_profile.controller')
 
 router.post('/register', register)
 router.post('/login',login)
@@ -27,6 +27,7 @@ router.get('/supportList', adminMidlware, getAllSupportTickets)
 router.get('/support/:id', adminMidlware, getTicketById)
 
 router.patch('/support/:id', adminMidlware, resolveTicket)
+router.patch('/profile', adminMidlware, changeProfile)
 
 router.delete('/delPet/:id', authMidlware, deletePet)
 router.delete('/support/:id', adminMidlware, deleteTicket)

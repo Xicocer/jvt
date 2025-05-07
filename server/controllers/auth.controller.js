@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const register = async (req, res) => {
     try{
-        const {first_name, last_name, patronymic, email, password, img} = req.body
+        const {first_name, last_name, patronymic, email, password} = req.body
 
         const existUser = await prisma.user.findUnique({ where: { email } })
         if (existUser){
