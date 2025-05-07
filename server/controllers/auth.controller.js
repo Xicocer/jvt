@@ -1,3 +1,6 @@
+const jdenticon = require('jdenticon');
+const fs = require('fs');
+const path = require('path')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('../generated/prisma/client');
@@ -7,6 +10,13 @@ const prisma = new PrismaClient();
 const register = async (req, res) => {
     try{
         const {first_name, last_name, patronymic, email, password} = req.body
+
+        const avatarName = `avatar-${Date.now()}.png`
+        const avatarPath = path.join(__dirname, '../public/avatar', avatarName)
+        const avatarUrl = `/avatar/${avatarName}`
+
+        const png = jdenticon.toPng(email, 200)
+        fs.writeFileSync(avatarPath, png)
 
         const existUser = await prisma.user.findUnique({ where: { email } })
         if (existUser){
@@ -22,7 +32,7 @@ const register = async (req, res) => {
                 patronymic,
                 email,
                 password:passwordHashed,
-                img,
+                img: avatarUrl
             },
         })
 

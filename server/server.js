@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use('/avatars', express.static('uploads/avatars'));
+app.use('/avatars', express.static('public/avatars'));
 app.use(cookieParser())
 app.use(cors({
     origin: process.env.FRONT_PORT,

@@ -34,5 +34,6 @@ generated
 prisma/migrations/*
 !prisma/schema.prisma
 uploads
+public
 
 *.tsbuildinfo
