@@ -13,6 +13,8 @@ const {sendSupportMessage} = require('../controllers/support_message.controller'
 const {adminMidlware} = require('../middleware/admin.midleware')
 const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = require('../controllers/list_support.controller')
 const {changeProfile} = require('../controllers/change_profile.controller')
+const {updateAvatar} = require('../controllers/avatar.cotroller')
+const upload = require('../config/multer');
 
 router.post('/register', register)
 router.post('/login',login)
@@ -28,6 +30,12 @@ router.get('/support/:id', adminMidlware, getTicketById)
 
 router.patch('/support/:id', adminMidlware, resolveTicket)
 router.patch('/profile', adminMidlware, changeProfile)
+router.patch(
+    '/profile/avatar',
+    authMidlware,
+    upload.single('avatar'),
+    updateAvatar
+)
 
 router.delete('/delPet/:id', authMidlware, deletePet)
 router.delete('/support/:id', adminMidlware, deleteTicket)
