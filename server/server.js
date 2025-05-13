@@ -5,6 +5,8 @@ const cors = require('cors')
 const http = require('http')
 const socketIo = require('socket.io')
 const cookieParser = require('cookie-parser')
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./doc/swagger');
 const {query} = require('express-validator');
 const { Socket } = require('dgram');
 
@@ -34,7 +36,7 @@ io.on('connection', (socket) => {
 })
 
 
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/avatars', express.static('uploads/avatars'));
 app.use('/mapimg', express.static('uploads/mapimg'));
 app.use('/avatars', express.static('public/avatars'));

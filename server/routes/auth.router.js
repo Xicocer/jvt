@@ -21,20 +21,259 @@ const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controll
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Создать пользователя
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *               last_name:
+ *                 type: string
+ *               patronymic:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/register', register)
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Войти
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/login',login)
+/**
+ * @swagger
+ * /refresh:
+ *   post:
+ *     summary: Перезапись токена
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/refresh', refresh)
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Выход
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/logout', logout)
+/**
+ * @swagger
+ * /addPet:
+ *   post:
+ *     summary: Добавить питомца
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *               gender:
+ *                 type: boolean
+ *               breedId:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/addPet', addPet)
+/**
+ * @swagger
+ * /support:
+ *   post:
+ *     summary: Добавить сообщение в тех.поддержку
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/support', authMidlware, sendSupportMessage)
+/**
+ * @swagger
+ * /markers:
+ *   post:
+ *     summary: Создать маркер на карту
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               latitube:
+ *                 type: decimal
+ *               longitube:
+ *                 type: decimal
+ *               img:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/markers', adminMidlware, mapimg.single('image'), addMarker)
+/**
+ * @swagger
+ * /chats:
+ *   post:
+ *     summary: Создать чат
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               type:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/chats', adminMidlware, createChat)
+/**
+ * @swagger
+ * /chats/:id/join:
+ *   post:
+ *     summary: Войти в чат
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: integer
+ *               chat_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.post('/chats/:id/join', authMidlware, insertIntoChat)
 
+/**
+ * @swagger
+ * /pets:
+ *   get:
+ *     summary: Выводит список питомцев пользователя
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.get('/pets', getPets)
+/**
+ * @swagger
+ * /profile:
+ *   get:
+ *     summary: Выводит профиль
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.get('/profile', authMidlware, getProfile)
+/**
+ * @swagger
+ * /supportList:
+ *   get:
+ *     summary: Выводит список сообщений тех.поддержки (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.get('/supportList', adminMidlware, getAllSupportTickets)
+/**
+ * @swagger
+ * /supportList/:id:
+ *   get:
+ *     summary: Выводит одно конкретное сообщение тех.поддержки (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.get('/support/:id', adminMidlware, getTicketById)
+/**
+ * @swagger
+ * /markers:
+ *   get:
+ *     summary: Выводит маркеры карты
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.get('/markers', markerList)
 
 router.patch('/support/:id', adminMidlware, resolveTicket)
