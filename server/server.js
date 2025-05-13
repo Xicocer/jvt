@@ -2,12 +2,38 @@ const authRoutes = require('./routes/auth.router')
 const viewsRoutes = require('./routes/views.routes')
 const express = require('express');
 const cors = require('cors')
+const http = require('http')
+const socketIo = require('socket.io')
 const cookieParser = require('cookie-parser')
-const {query} = require('express-validator')
+const {query} = require('express-validator');
+const { Socket } = require('dgram');
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+const server = http.createServer(app)
+const io = socketIo(server, {
+    cors: {
+        origin: process.env.FRONT_PORT, 
+        credentials: true
+    }
+})
+
+io.on('connection', (socket) => {
+    console.log('Пользователь подключен', socket.id)
+
+    socket.on('message', (data) => {
+        console.log('Сообщение:', data)
+
+        io.emit('message', data)
+    })
+
+    socket.on('disconnect', () => {
+        console.log('Пользователь отключен:', socket.id)
+    })
+})
+
+
 
 app.use('/avatars', express.static('uploads/avatars'));
 app.use('/mapimg', express.static('uploads/mapimg'));

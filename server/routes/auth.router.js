@@ -15,7 +15,9 @@ const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = requi
 const {changeProfile} = require('../controllers/change_profile.controller')
 const {updateAvatar} = require('../controllers/avatar.cotroller')
 const {changePet} = require('../controllers/change_pet.controller')
-const {addMarker, deleteMarker, updateMarker, markerList} = require('../controllers/marker.controller')
+const {addMarker, deleteMarker, markerList} = require('../controllers/marker.controller')
+const {createChat} = require('../controllers/add_chat.controller')
+const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
@@ -26,6 +28,8 @@ router.post('/logout', logout)
 router.post('/addPet', addPet)
 router.post('/support', authMidlware, sendSupportMessage)
 router.post('/markers', adminMidlware, mapimg.single('image'), addMarker)
+router.post('/chats', adminMidlware, createChat)
+router.post('/chats/:id/join', authMidlware, insertIntoChat)
 
 router.get('/pets', getPets)
 router.get('/profile', authMidlware, getProfile)
@@ -37,11 +41,11 @@ router.patch('/support/:id', adminMidlware, resolveTicket)
 router.patch('/profile', adminMidlware, changeProfile)
 router.patch('/changePet/:id', authMidlware, changePet)
 router.patch('/profile/avatar', authMidlware, upload.single('avatar'), updateAvatar)
-router.patch('/markers/:id', adminMidlware, updateMarker)
-
+// router.patch('/markers/:id', adminMidlware, updateMarker)
 
 router.delete('/delPet/:id', authMidlware, deletePet)
 router.delete('/support/:id', adminMidlware, deleteTicket)
 router.delete('/markers/:id', adminMidlware, deleteMarker)
+router.delete('/chats', authMidlware, leaveChat)
 
 module.exports = router

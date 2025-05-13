@@ -54,33 +54,26 @@ const deleteMarker = async (req, res) => {
     
 }
 
-const updateMarker = async (req, res) => {
-    try{
-        const {name, type, address} = req.body
+// const updateMarker = async (req, res) => {
+//     try{
+//         const {name, type, address} = req.body
 
-        const marker = await prisma.MapMarkers.findUnique({
-        where: {id: +req.params.id},
-    })
+//         const updateData = {}
+//         if (name) updateData.name = name;
+//         if (type) updateData.type = type;
+//         if (address) updateData.address = address;
 
-    if (!marker){
-        return res.status(403).json({message: "Маркер не найден"})
-    }
+//     const updateMarker = await prisma.MapMarkers.update({
+//         where: {id: +req.params.id},
+//         data: updateData
+//     })
 
-    const updateMarker = await prisma.MapMarkers.update({
-        data: {
-            name,
-            type,
-            address,
-            img: `/mapimg/${req.file.filename}`,
-        }
-    })
-
-    res.status(200).json(updateMarker)
-    }catch(error){
-        console.error('Ошибка обновления маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
-        res.status(500).json({ message: 'Ошибка обновления маркера' })
-    }
-}
+//     res.status(200).json(updateMarker)
+//     }catch(error){
+//         console.error('Ошибка обновления маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
+//         res.status(500).json({ message: 'Ошибка обновления маркера' })
+//     }
+// }
 
 const markerList = async (req, res) => {
     try{
@@ -93,9 +86,10 @@ const markerList = async (req, res) => {
 }
 
 
+
+
 module.exports = {
     addMarker,
     deleteMarker,
-    updateMarker,
     markerList
 }

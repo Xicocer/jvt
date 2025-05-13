@@ -36,48 +36,26 @@
 
 <style lang="scss" scoped>
 .panel{
-    background: #5f5f5f;
+    background-color: #5f5f5f;
+    display: flex; 
+    flex-direction: column;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
+    border-radius: 1rem;
+}
+
+.panel h3{
+    margin: 1rem;
 }
 
 .toggels{
     display: flex;
-    padding: 1rem;
     justify-content: space-around;
+    padding: 1rem;
 }
 
-.radio-wrapper input[type="radio"] {
-  opacity: 0;
-  cursor: pointer;
-}
-
-.custom-radio {
-  height: 20px;
-  width: 50px;
-  background-color: #eee;
-  border: 2px solid #999;
-  border-radius: 50%;
-  transition: 0.2s;
-}
-
-.radio-wrapper input:checked ~ .custom-radio {
-  border-color: #71d316;
-  background-color: #fff;
-}
-
-.custom-radio::after {
-  content: "";
-  display: none;
-}
-
-.radio-wrapper input:checked ~ .custom-radio::after {
-  display: block;
-}
-
-.radio-wrapper .custom-radio::after {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #71d316;
+.radio-wrapper{
+    display: flex;
 }
 
 </style>
