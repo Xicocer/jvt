@@ -6,6 +6,10 @@ const addAnimal = async (req, res) => {
     try{
         const {name} = req.body
 
+        if (!name){
+            return res.status(400).json({message:"Нет названия животного"})
+        }
+
         await prisma.pet.create({
             data: {
                 name
@@ -27,7 +31,7 @@ const deleteAnimal = async (req, res) => {
 
         res.status(200).json({message:"Домашнее животное удалено"})
     }catch(error){
-         console.error('Ошибка удаления домашнего животного: ', error)
+        console.error('Ошибка удаления домашнего животного: ', error)
         res.status(500).json({ 
             error: 'Ошибка удаления домашнего животного',
             details: error.message })

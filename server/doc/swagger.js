@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'JVT API',
-      version: '1.0.0',
-      description: 'API для управления [описание проекта]',
+      title: 'Мессенджер для владельцев домашних животных',
+      version: '1.4.0',
+      description: 'API для управления мессенджером для собачников, если будешь переделывать то удачи тебе друг',
     },
     servers: [{ url: 'http://localhost:5000' }],
   },

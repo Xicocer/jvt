@@ -19,6 +19,7 @@ const {addMarker, deleteMarker, markerList} = require('../controllers/marker.con
 const {createChat} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
+const {addBreed, deleteBreed} = require('../controllers/breed.controller')
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
@@ -244,6 +245,27 @@ router.post('/chats/:id/join', authMidlware, insertIntoChat)
  *         description: Успешно
  */
 router.post('/addAnimal', adminMidlware, addAnimal)
+/**
+ * @swagger
+ * /breed:
+ *   post:
+ *     summary: Добавить породу (Только для админов)
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               pet_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.post('/breed', adminMidlware, addBreed)
 
 /**
  * @swagger
@@ -422,13 +444,23 @@ router.delete('/markers/:id', adminMidlware, deleteMarker)
 router.delete('/chats', authMidlware, leaveChat)
 /**
  * @swagger
- * /animal:
+ * /animal:id:
  *   delete:
  *     summary: Удаление домашнего животного (Только для админов)
  *     responses:
  *       200:
  *         description: Успешно
  */
-router.delete('/animals', adminMidlware, deleteAnimal)
+router.delete('/animals:id', adminMidlware, deleteAnimal)
+/**
+ * @swagger
+ * /breed:id:
+ *   delete:
+ *     summary: Удаление породы (Только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.delete('/breed:id', adminMidlware, deleteBreed)
 
 module.exports = router
