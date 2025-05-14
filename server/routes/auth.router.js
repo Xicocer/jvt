@@ -276,15 +276,119 @@ router.get('/support/:id', adminMidlware, getTicketById)
  */
 router.get('/markers', markerList)
 
+/**
+ * @swagger
+ * /support/:id:
+ *   patch:
+ *     summary: Меняет тип тикета тех.поддержки на "Решено", только для админов. Параметров не принимает
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.patch('/support/:id', adminMidlware, resolveTicket)
+/**
+ * @swagger
+ * /profile:
+ *   patch:
+ *     summary: Меняет данные пользователя, можно посылать изменение на одно, два или три поля 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *               last_name:
+ *                 type: string
+ *               patronymic:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.patch('/profile', adminMidlware, changeProfile)
+/**
+ * @swagger
+ * /changePet/:id:
+ *   patch:
+ *     summary: По сути меняет только возраст питомца
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               age:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.patch('/changePet/:id', authMidlware, changePet)
+/**
+ * @swagger
+ * /profile/avatar:
+ *   patch:
+ *     summary: Меняет аватар пользователя, принимает в себя файл, ну посути путь до него, но пользователь загружает файл все таки
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               img:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.patch('/profile/avatar', authMidlware, upload.single('avatar'), updateAvatar)
 // router.patch('/markers/:id', adminMidlware, updateMarker)
 
+
+/**
+ * @swagger
+ * /delPet/:id:
+ *   delete:
+ *     summary: Удаляет питомца 
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.delete('/delPet/:id', authMidlware, deletePet)
+/**
+ * @swagger
+ * /support/:id:
+ *   delete:
+ *     summary: Удаляет тикет тех.поддержки (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.delete('/support/:id', adminMidlware, deleteTicket)
+/**
+ * @swagger
+ * /markers/:id:
+ *   delete:
+ *     summary: Удаляет маркеры на карте (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.delete('/markers/:id', adminMidlware, deleteMarker)
+/**
+ * @swagger
+ * /chats:
+ *   delete:
+ *     summary: Покинуть чат (по сути удаление связи между конкретным пользователем и конкретным чатом)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
 router.delete('/chats', authMidlware, leaveChat)
 
 module.exports = router
