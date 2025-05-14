@@ -18,6 +18,7 @@ const {changePet} = require('../controllers/change_pet.controller')
 const {addMarker, deleteMarker, markerList} = require('../controllers/marker.controller')
 const {createChat} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
+const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
@@ -224,6 +225,25 @@ router.post('/chats', adminMidlware, createChat)
  *         description: Успешно
  */
 router.post('/chats/:id/join', authMidlware, insertIntoChat)
+/**
+ * @swagger
+ * /addAnimal:
+ *   post:
+ *     summary: Добавить домашнее животное (только для админов)
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         aplication/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.post('/addAnimal', adminMidlware, addAnimal)
 
 /**
  * @swagger
@@ -275,6 +295,16 @@ router.get('/support/:id', adminMidlware, getTicketById)
  *         description: Успешно
  */
 router.get('/markers', markerList)
+/**
+ * @swagger
+ * /animals:
+ *   get:
+ *     summary: Выводит все виды домашних животных и породы для них (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/animals', adminMidlware, getAllAnimalsWithBreed)
 
 /**
  * @swagger
@@ -390,5 +420,15 @@ router.delete('/markers/:id', adminMidlware, deleteMarker)
  *         description: Успешно
  */
 router.delete('/chats', authMidlware, leaveChat)
+/**
+ * @swagger
+ * /animal:
+ *   delete:
+ *     summary: Удаление домашнего животного (Только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.delete('/animals', adminMidlware, deleteAnimal)
 
 module.exports = router
