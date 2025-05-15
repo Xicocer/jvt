@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./doc/swagger');
 const morgan = require('morgan')
+const {setupSocket} = require('./socket/socket')
 const {query} = require('express-validator');
 const { Socket } = require('dgram');
 
@@ -22,19 +23,7 @@ const io = socketIo(server, {
     }
 })
 
-io.on('connection', (socket) => {
-    console.log('Пользователь подключен', socket.id)
-
-    socket.on('message', (data) => {
-        console.log('Сообщение:', data)
-
-        io.emit('message', data)
-    })
-
-    socket.on('disconnect', () => {
-        console.log('Пользователь отключен:', socket.id)
-    })
-})
+setupSocket(io)
 
 app.use(morgan('dev'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -54,7 +43,7 @@ app.use("", viewsRoutes)
 
 const start = () => {
     try{
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+        server.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     }catch (e) {
         console.log(e);
     }

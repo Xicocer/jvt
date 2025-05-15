@@ -5,12 +5,12 @@ const options = {
     openapi: '3.0.0',
     info: {
       title: 'Мессенджер для владельцев домашних животных',
-      version: '1.4.0',
+      version: '1.5.0',
       description: 'API для управления мессенджером для собачников, если будешь переделывать то удачи тебе друг',
     },
     servers: [{ url: 'http://localhost:5000' }],
   },
-  apis: ['./routes/auth.router.js'], // Путь к файлам с роутерами
+  apis: ['./routes/auth.router.js'], 
 };
 
 module.exports = swaggerJsdoc(options);
