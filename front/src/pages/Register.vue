@@ -49,6 +49,7 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import router from '@/router'
 
 // refs
 const firstName = ref('')
@@ -85,7 +86,7 @@ const register = async () => {
     }, { withCredentials: true })
 
     console.log('Успех:', res.data)
-    // перенаправление или уведомление
+    router.push('/login')
   } catch (err) {
     error.value =
       err.response?.data?.message || 'Ошибка регистрации'
