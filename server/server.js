@@ -32,7 +32,7 @@ app.use('/mapimg', express.static('uploads/mapimg'));
 app.use('/avatars', express.static('public/avatars'));
 app.use(cookieParser())
 app.use(cors({
-    origin: process.env.FRONT_PORT,
+    origin: true,
     credentials: true
 }))
 app.use(express.json())
