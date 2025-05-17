@@ -29,7 +29,7 @@ app.use(morgan('dev'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/avatars', express.static('uploads/avatars'));
 app.use('/mapimg', express.static('uploads/mapimg'));
-app.use('/avatars', express.static('public/avatars'));
+app.use('/avatar', express.static('public/avatar'));
 app.use(cookieParser())
 app.use(cors({
     origin: true,

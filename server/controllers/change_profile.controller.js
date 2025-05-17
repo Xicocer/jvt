@@ -11,12 +11,12 @@ const changeProfile = async (req, res) => {
         if (last_name) updateData.last_name = last_name;
         if (patronymic) updateData.patronymic = patronymic;
 
-        const udatedUser = await prisma.user.update({
+        const updatedUser = await prisma.user.update({
             where: {id: req.user.userId},
             data: updateData,
         })
 
-        res.status(200).json({message:"Данные пользоваеля обновлены"})
+        res.status(200).json({message:"Данные пользоваеля обновлены", user: updateData})
         
     }catch(error){
         console.error('Ошибка обновления профиля:', error)

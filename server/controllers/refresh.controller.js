@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const refresh = async (req, res) =>{
     try{
 
-        const {refreshToken} = req.body;
+        const refreshToken = req.cookies.refresh_token;
 
         if (!refreshToken){
             return res.status(401).json({message:'Отсутствует refresh токен'});
