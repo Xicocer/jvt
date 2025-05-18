@@ -47,7 +47,31 @@ const deleteBreed = async (req, res) => {
     }
 }
 
+const getBreedById = async (req, res) => {
+    try{
+        const petId = parseInt(req.params.id)
+
+        if (isNaN(petId)){
+            return res.status(400).json({message:"Неверный id питомца"})
+        }
+
+        const pet = await prisma.breed.findMany({
+            where: {pet_id: petId}
+        })
+
+        if (!pet){
+            return res.status(404).json({message: "Порода не найдена"})
+        }
+
+        res.status(200).json(pet)
+    }catch(error){
+        console.error('Ошибка Вывода породы: ', error)
+        res.status(500).json({ message: 'Ошибка сервера при выводе породы' })
+    }
+}
+
 module.exports = {
     addBreed,
-    deleteBreed
+    deleteBreed,
+    getBreedById
 }

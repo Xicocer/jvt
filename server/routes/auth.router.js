@@ -19,7 +19,7 @@ const {addMarker, deleteMarker, markerList} = require('../controllers/marker.con
 const {createChat} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
-const {addBreed, deleteBreed} = require('../controllers/breed.controller')
+const {addBreed, deleteBreed, getBreedById} = require('../controllers/breed.controller')
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
@@ -326,7 +326,17 @@ router.get('/markers', markerList)
  *       200:
  *         description: Успешно
  */
-router.get('/animals', adminMidlware, getAllAnimalsWithBreed)
+router.get('/animals', authMidlware, getAllAnimalsWithBreed)
+/**
+ * @swagger
+ * /breed/:id:
+ *   get:
+ *     summary: Выводит список пород по id вида животного 
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/breed/:id', authMidlware, getBreedById)
 
 /**
  * @swagger
