@@ -61,7 +61,6 @@ const passwordConfirmation = ref('')
 const error = ref(null)
 const formRef = ref(null)
 
-// валидация
 const rules = {
   required: v => !!v || 'Обязательное поле',
   min: v => (v && v.length >= 8) || 'Минимум 8 символов',
@@ -70,7 +69,6 @@ const rules = {
 const matchPassword = v =>
   v === password.value || 'Пароли не совпадают'
 
-// метод
 const register = async () => {
   error.value = null
   const { valid } = await formRef.value.validate()

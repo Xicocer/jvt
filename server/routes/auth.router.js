@@ -360,7 +360,7 @@ router.patch('/support/:id', adminMidlware, resolveTicket)
  *       200:
  *         description: Успешно
  */
-router.patch('/profile', adminMidlware, changeProfile)
+router.patch('/profile', authMidlware, changeProfile)
 /**
  * @swagger
  * /changePet/:id:

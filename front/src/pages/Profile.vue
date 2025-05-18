@@ -19,6 +19,14 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+            <v-form ref="formRef" @submit.prevent="changeProfile">
+              <v-text-field v-model="firstName" label="Имя" />
+              <v-text-field v-model="lastName" label="Фамилия" />
+              <v-text-field v-model="patronymic" label="Отчество" />
+              <v-btn color="primary" type="submit" class="mt-4" block>
+                Изменить профиль
+              </v-btn>
+            </v-form>  
       </v-card-text>
       <v-card-actions>
         <v-btn color="error" @click="logout">Выйти</v-btn>
@@ -29,40 +37,66 @@
   
 </template>
 
-<script>
-import axios from '@/lib/axios' // твой axios-инстанс
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from '@/lib/axios'
 
-export default {
-  data() {
-    return {
-      user: null,
-    }
-  },
-  async mounted() {
-    try {
-      const res = await axios.get('/profile')
-      this.user = res.data
-    } catch (err) {
-      console.error('Ошибка загрузки профиля', err)
-      // можно сделать редирект на логин если 401
-      if (err.response && err.response.status === 401) {
-        this.$router.push('/login')
-      }
-    }
-  },
-  methods: {
-      getAvatarUrl(path) {
-        return `http://localhost:5000${path}`;
-        },
-    async logout() {
-      try {
-        await axios.post('/logout')
-        this.$router.push('/login')
-      } catch (err) {
-        console.error('Ошибка выхода', err)
-      }
-    }
-  },
+// Состояния
+const user = ref(null)
+const firstName = ref('')
+const lastName = ref('')
+const patronymic = ref('')
 
+// Маршрутизатор
+const router = useRouter()
+
+// Получение URL аватара
+const getAvatarUrl = (path) => `http://localhost:5000${path}`
+
+// Загрузка данных пользователя
+const fetchProfile = async () => {
+  try {
+    const res = await axios.get('/profile')
+    user.value = res.data
+
+    firstName.value = res.data.first_name
+    lastName.value = res.data.last_name
+    patronymic.value = res.data.patronymic
+  } catch (err) {
+    console.error('Ошибка загрузки профиля', err)
+    if (err.response && err.response.status === 401) {
+      router.push('/login')
+    }
+  }
 }
+
+// Обновление профиля
+const changeProfile = async () => {
+  try {
+    await axios.patch('/profile', {
+      first_name: firstName.value,
+      last_name: lastName.value,
+      patronymic: patronymic.value
+    })
+    await fetchProfile() // обновляем данные после изменения
+  } catch (err) {
+    console.error('Ошибка обновления профиля', err)
+  }
+}
+
+// Выход
+const logout = async () => {
+  try {
+    await axios.post('/logout')
+    router.push('/login')
+  } catch (err) {
+    console.error('Ошибка выхода', err)
+  }
+}
+
+// При монтировании компонента — загрузка профиля
+onMounted(() => {
+  fetchProfile()
+})
 </script>

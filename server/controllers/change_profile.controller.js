@@ -16,7 +16,7 @@ const changeProfile = async (req, res) => {
             data: updateData,
         })
 
-        res.status(200).json({message:"Данные пользоваеля обновлены", user: updateData})
+        res.status(200).json({message:"Данные пользоваеля обновлены", user: updatedUser})
         
     }catch(error){
         console.error('Ошибка обновления профиля:', error)
