@@ -10,15 +10,66 @@
             <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
         </div>
+        <div>
         <h3>Питомцы:</h3>
         <v-list>
           <v-list-item v-for="pet in user.user_pets" :key="pet.id">
-            <v-list-item-content>
+            <div class="d-flex">
+              <v-list-item-content>
               <v-list-item-title>{{ pet.name }}</v-list-item-title>
+              <v-list-item-subtitle>Пол: {{ genderPet(pet.gender) }}</v-list-item-subtitle>
               <v-list-item-subtitle>{{ pet.breed?.name }} - {{ pet.age }} {{ getAgeWord(pet.age) }}</v-list-item-subtitle>
             </v-list-item-content>
+              <v-dialog v-model="editDialog" max-width="400">
+              <v-card>
+                <v-card-title>Изменить возраст</v-card-title>
+                <v-card-text>
+                  <v-text-field
+                    v-model.number="editingPet.age"
+                    type="number"
+                    label="Новый возраст"
+                    min="0"
+                    max="30"
+                  />
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="editDialog = false">Отмена</v-btn>
+                  <v-btn 
+                    color="primary" 
+                    @click="updatePetAge(pet.id)"
+                    :loading="updateLoading"
+                  >
+                    Сохранить
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+              <v-list-item-action>
+                <v-btn 
+                  icon 
+                  size="x-small" 
+                  @click="openEditDialog(pet)"
+                  variant="outline"
+                  color = "primary"
+                  class="ml-2"
+                >
+                  <v-icon size="small">mdi-pencil-outline</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  color="error"
+                  @click="confirmDelete(pet.id)"
+                  size="small"
+                >
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-list-item-action>
+            </div>
           </v-list-item>
         </v-list>
+        </div>
+
             <v-form ref="formRef" @submit.prevent="changeProfile">
               <v-text-field v-model="firstName" label="Имя" />
               <v-text-field v-model="lastName" label="Фамилия" />
@@ -35,68 +86,12 @@
     <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
   </v-container>
 
-<v-container>
-    <v-card>
-      <v-card-title>Добавить питомца</v-card-title>
-      <v-card-text>
-        <v-form @submit.prevent="submitForm">
-          <v-text-field
-            v-model="petName"
-            label="Имя питомца"
-            required
-          />
-
-          <v-text-field
-            v-model="petAge"
-            type="number"
-            label="Возраст"
-            required
-          />
-
-          <v-radio-group
-            v-model="petGender"
-            label="Пол питомца"
-            required
-          >
-            <v-radio
-              label="Мальчик"
-              :value="true"
-            ></v-radio>
-            <v-radio
-              label="Девочка"
-              :value="false"
-            ></v-radio>
-          </v-radio-group>
-
-          <v-select
-            v-model="selectedAnimalId"
-            :items="animalOptions"
-            item-title="name"
-            item-value="id"
-            label="Тип животного"
-            required
-            @update:modelValue="handleAnimalChange"
-          />
-
-          <v-select
-            v-model="selectedBreedId"
-            :items="breedOptions"
-            item-title="name"
-            item-value="id"
-            label="Порода"
-            required
-            :disabled="!selectedAnimalId"
-          />
-
-          <v-btn type="submit" color="primary">Сохранить</v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <form-pet/>
   
 </template>
 
 <script setup>
+import FormPet from '@/components/FormPet.vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/lib/axios'
@@ -144,6 +139,33 @@ const changeProfile = async () => {
   }
 }
 
+const confirmDelete = (petId) => {
+  if (confirm('Вы уверены, что хотите удалить этого питомца?')) {
+    deletePet(petId)
+  }
+}
+
+const deletePet = async (petId) => {
+  try {
+    await axios.delete(`/delPet/${petId}`, { withCredentials: true })
+    // Обновляем данные пользователя после удаления
+    await fetchProfile()
+    alert('Питомец успешно удален')
+  } catch (error) {
+    console.error('Ошибка при удалении питомца:', error)
+    alert('Не удалось удалить питомца')
+  }
+}
+
+const genderPet = (gender) => {
+if (gender == 1){
+  return 'Мужской'
+}
+else{
+  return 'Женский'
+}
+}
+
 // Выход
 const logout = async () => {
   try {
@@ -164,75 +186,52 @@ const getAgeWord = (age) => {
   return 'лет';
 };  
 
+//Логика для модального окна 
+
+const editDialog = ref(false)
+const updateLoading = ref(false)
+const editingPet = ref({
+  id: null,
+  age: 0
+})
+
+const openEditDialog = (pet) => {
+  editingPet.value = {
+    id: pet.id,
+    age: pet.age
+  }
+  editDialog.value = true
+}
+
+const updatePetAge = async (petId) => {
+  if (!editingPet.value.age && editingPet.value.age !== 0) {
+    alert('Введите корректный возраст')
+    return
+  }
+
+  updateLoading.value = true
+  try {
+    await axios.patch(`/changePet/${petId}`, {
+      age: editingPet.value.age
+    }, { withCredentials: true })
+    
+    // Обновляем локальные данные
+    const petIndex = user.value.user_pets.findIndex(p => p.id === editingPet.value.id)
+    if (petIndex !== -1) {
+      user.value.user_pets[petIndex].age = editingPet.value.age
+    }
+    
+    editDialog.value = false
+  } catch (error) {
+    console.error('Ошибка обновления:', error)
+    alert('Не удалось обновить возраст')
+  } finally {
+    updateLoading.value = false
+  }
+}
+
 // При монтировании компонента — загрузка профиля
 onMounted(() => {
   fetchProfile()
 })
-
-const petName = ref('')
-const petAge = ref('')
-const petGender = ref(null) // true - мальчик, false - девочка
-const selectedAnimalId = ref(null)
-const selectedBreedId = ref(null)
-const animals = ref([])
-const breeds = ref([])
-
-const animalOptions = computed(() => animals.value)
-const breedOptions = computed(() => breeds.value)
-
-const fetchBreeds = async (animalId) => {
-  if (!animalId) {
-    breeds.value = []
-    return
-  }
-  
-  try {
-    const response = await axios.get(`/breed/${animalId}`, { withCredentials: true })
-    breeds.value = response.data
-    selectedBreedId.value = null
-  } catch (error) {
-    console.error('Ошибка загрузки пород:', error)
-    breeds.value = []
-  }
-}
-
-const fetchAnimals = async () => {
-  try {
-    const response = await axios.get('/animals', { withCredentials: true })
-    animals.value = response.data
-  } catch (error) {
-    console.error('Ошибка загрузки животных:', error)
-  }
-}
-
-const handleAnimalChange = (animalId) => {
-  selectedBreedId.value = null
-  fetchBreeds(animalId)
-}
-
-const submitForm = async () => {
-  try {
-    const payload = {
-      name: petName.value,
-      age: parseInt(petAge.value),
-      gender: petGender.value, // Добавляем пол в отправляемые данные
-      breedId: selectedBreedId.value
-    }
-
-    await axios.post('/addPet', payload, { withCredentials: true })
-    alert('Питомец успешно добавлен!')
-    // Очистить форму
-    petName.value = ''
-    petAge.value = ''
-    petGender.value = null
-    selectedAnimalId.value = null
-    selectedBreedId.value = null
-    breeds.value = []
-  } catch (error) {
-    console.error('Ошибка при добавлении питомца:', error)
-    alert('Ошибка при добавлении питомца')
-  }
-}
-
-onMounted(fetchAnimals)
 </script>
