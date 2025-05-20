@@ -84,6 +84,7 @@ export default defineConfig({
       },
       scss: {
         api: 'modern-compiler',
+        additionalData: `@import "cropperjs/dist/cropper.css";`,
       },
     },
   },

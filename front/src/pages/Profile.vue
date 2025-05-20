@@ -3,9 +3,16 @@
     <v-card v-if="user">
       <v-card-title>Профиль пользователя</v-card-title>
       <v-card-text class="d-flex justify-space-between">
-        <v-avatar size="200" v-if="user.img">
-          <img :src="getAvatarUrl(user.img)" alt="Аватар">
-        </v-avatar>
+        <div class="d-flex align-center mb-6">
+          <v-avatar size="120" class="mr-6">
+            <v-img
+              v-if="user.img"
+              :src="getAvatarUrl(user.img)"
+              alt="Аватар"
+            ></v-img>
+            <v-icon v-else size="60">mdi-account</v-icon>
+          </v-avatar>
+        </div>
         <div>
             <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
@@ -92,6 +99,7 @@
 
 <script setup>
 import FormPet from '@/components/FormPet.vue'
+
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/lib/axios'

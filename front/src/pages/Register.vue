@@ -48,8 +48,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
 import router from '@/router'
+import { useAuthStore } from '@/stores/auth.store'
 
 // refs
 const firstName = ref('')
@@ -69,26 +69,22 @@ const rules = {
 const matchPassword = v =>
   v === password.value || 'Пароли не совпадают'
 
+const auth = useAuthStore()
+
 const register = async () => {
   error.value = null
   const { valid } = await formRef.value.validate()
   if (!valid) return
 
-  try {
-    const res = await axios.post('http://localhost:5000/api/register', {
-      first_name: firstName.value,
-      last_name: lastName.value,
-      patronymic: patronymic.value,
-      email: email.value,
-      password: password.value,
-    }, { withCredentials: true })
+ await auth.register({
+    firstName: firstName.value,
+    lastName: lastName.value,
+    patronymic: patronymic.value,
+    email: email.value,
+    password: password.value
+  }) 
 
-    console.log('Успех:', res.data)
-    router.push('/login')
-  } catch (err) {
-    error.value =
-      err.response?.data?.message || 'Ошибка регистрации'
-  }
+   router.push('/login')
 }
 </script>
 
