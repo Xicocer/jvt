@@ -57,7 +57,8 @@ const login = async (req, res) => {
 
         res.status(201).json({
             message:"Вход выполнен успешно",
-            accessToken:accessToken
+            accessToken:accessToken, 
+            user: user
         });
 
 

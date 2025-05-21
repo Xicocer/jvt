@@ -24,26 +24,23 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useAuthStore } from '@/stores/auth.store'
 
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
 const router = useRouter()
 
+const auth = useAuthStore()
+
 const login = async () => {
   errorMessage.value = ''
 
-  try {
-    const res = await axios.post('http://localhost:5000/api/login', {
-      email: email.value,
-      password: password.value
-    }, {
-      withCredentials: true
-    })
+  await auth.login({
+    email: email.value,
+    password: password.value
+  })
 
-    router.push('/')
-  } catch (err) {
-    errorMessage.value = err.response?.data?.message || 'Ошибка входа'
-  }
+  router.push('/')
 }
 </script>
