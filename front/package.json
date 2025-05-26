@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
+    "@yandex/ymaps3-types": "^1.0.16530300",
     "eslint": "^9.23.0",
     "eslint-config-vuetify": "^3.0.3",
     "globals": "^16.0.0",

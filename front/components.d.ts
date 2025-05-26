@@ -12,6 +12,7 @@ declare module 'vue' {
     AvatarCrooper: typeof import('./src/components/AvatarCrooper.vue')['default']
     FormPet: typeof import('./src/components/FormPet.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    MapMain: typeof import('./src/components/MapMain.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

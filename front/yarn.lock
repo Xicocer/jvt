@@ -497,7 +497,7 @@
   dependencies:
     "@vue/shared" "3.5.14"
 
-"@vue/runtime-core@3.5.14":
+"@vue/runtime-core@3", "@vue/runtime-core@3.5.14":
   version "3.5.14"
   resolved "https://registry.npmjs.org/@vue/runtime-core/-/runtime-core-3.5.14.tgz"
   integrity sha512-w9JWEANwHXNgieAhxPpEpJa+0V5G0hz3NmjAZwlOebtfKyp2hKxKF0+qSh0Xs6/PhfGihuSdqMprMVcQU/E6ag==
@@ -534,6 +534,11 @@
   integrity sha512-dNE6Ceym9ijFsmJKB7YGW0cxs7xbYV8+1LjU6jd4P14xOt/ji4Igtgzt0rJFbxu+ZhAzqz853lhB0z8V9Dy9cQ==
   dependencies:
     upath "^2.0.1"
+
+"@yandex/ymaps3-types@^1.0.16530300":
+  version "1.0.16530300"
+  resolved "https://registry.npmjs.org/@yandex/ymaps3-types/-/ymaps3-types-1.0.16530300.tgz"
+  integrity sha512-cftV6Y6jbY6oXUSkGWDJDNLQgsA+SdQCW758snHisS48P/xUFjSJEGjLdOKr4fs9X48SX2mKkbqLIl/56nKfJA==
 
 accepts@^2.0.0:
   version "2.0.0"

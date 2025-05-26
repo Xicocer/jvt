@@ -1,7 +1,11 @@
+<script setup>
+import MapMain from '@/components/MapMain.vue';
+</script>
+
 <template>
-  
+    <MapMain/>
 </template>
 
-<script setup>
-  //
-</script>
+<style lang="scss" scoped>
+
+</style>
