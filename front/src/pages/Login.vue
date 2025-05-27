@@ -12,6 +12,7 @@
               <v-card-actions class="mt-4">
                 <v-btn color="primary" type="submit" block>Войти</v-btn>
               </v-card-actions>
+              <RouterLink></RouterLink>
             </v-form>
           </v-card-text>
         </v-card>

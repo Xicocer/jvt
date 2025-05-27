@@ -48,7 +48,7 @@ export const useAuthStore = defineStore("auth", {
 
     async login(userData) {
       this.isLoading = true;
-      this.erorr = null;
+      this.error = null;
 
       try {
         const response = await axios.post(
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore("auth", {
         } else {
           router.push("/AdminPanel");
         }
-      } catch (erorr) {
+      } catch (error) {
         //
       } finally {
         this.isLoading = false;

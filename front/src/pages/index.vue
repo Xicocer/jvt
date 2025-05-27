@@ -1,5 +1,6 @@
 <script setup>
 import MapMain from '@/components/MapMain.vue';
+
 </script>
 
 <template>
