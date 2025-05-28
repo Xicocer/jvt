@@ -8,7 +8,7 @@ const {addPet} = require('../controllers/add_pet.controller')
 const {getPets} = require('../controllers/list_pets.controller')
 const {deletePet} = require('../controllers/delet_pet.controller')
 const {authMidlware} = require('../middleware/auth.middleware')
-const {getProfile} = require('../controllers/profile.controller')
+const {getProfile, Me} = require('../controllers/profile.controller')
 const {sendSupportMessage} = require('../controllers/support_message.controller')
 const {adminMidlware} = require('../middleware/admin.midleware')
 const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = require('../controllers/list_support.controller')
@@ -319,6 +319,16 @@ router.get('/support/:id', adminMidlware, getTicketById)
 router.get('/markers', markerList)
 /**
  * @swagger
+ * /me:
+ *   get:
+ *     summary: проверяет вход пользователя пользователя
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/me', authMidlware, Me)
+/**
+ * @swagger
  * /animals:
  *   get:
  *     summary: Выводит все виды домашних животных и породы для них (только для админов)
@@ -454,14 +464,14 @@ router.delete('/markers/:id', adminMidlware, deleteMarker)
 router.delete('/chats', authMidlware, leaveChat)
 /**
  * @swagger
- * /animal:id:
+ * /animals:id:
  *   delete:
  *     summary: Удаление домашнего животного (Только для админов)
  *     responses:
  *       200:
  *         description: Успешно
  */
-router.delete('/animals:id', adminMidlware, deleteAnimal)
+router.delete('/animals/:id', adminMidlware, deleteAnimal)
 /**
  * @swagger
  * /breed:id:

@@ -37,7 +37,7 @@
 }
 .map{
     width: 100vw;
-    height: 60vh;
+    height: 50vh;
 }
 
 .map-view{

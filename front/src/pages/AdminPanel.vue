@@ -60,13 +60,20 @@ import ChatForm from '@/components/ChatForm.vue'
 import MarkerMap from '@/components/MarkerMap.vue'
 import SupportForm from '@/components/SupportForm.vue'
 import { components } from 'vuetify/dist/vuetify.js'
+import BreedForm from '@/components/BreedForm.vue'
 
 
 const menuItems = [
   { 
-    id: 'breeds', 
-    title: 'Управление животными и породами', 
+    id: 'animals', 
+    title: 'Управление животными', 
     component: BreedAnimal,
+    icon: 'mdi-paw'
+  },
+  { 
+    id: 'breeds', 
+    title: 'Управление породами', 
+    component: BreedForm,
     icon: 'mdi-paw'
   },
   { 

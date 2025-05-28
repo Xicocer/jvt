@@ -1,4 +1,5 @@
 <template>
+  <MainMenu/>
   <v-container>
     <v-card v-if="user">
       <v-card-title>Профиль пользователя</v-card-title>
@@ -103,6 +104,8 @@ import FormPet from '@/components/FormPet.vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/lib/axios'
+import MainMenu from '@/components/MainMenu.vue'
+
 
 // Состояния
 const user = ref(null)

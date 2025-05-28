@@ -62,6 +62,9 @@ export const useAuthStore = defineStore("auth", {
 
         console.log("Успешная вход: ", response.data);
 
+        this.user = response.data.user;
+        this.token = response.data.accessToken;
+
         if (response.data.user.role == 0) {
           router.push("/");
         } else {

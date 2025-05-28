@@ -52,6 +52,26 @@ const getProfile =async (req, res) =>{
     }
 }
 
+const Me = async (req, res) =>{
+    const token = req.cookies?.accessToken
+
+    if (!token) {
+        return res.status(401).json({ message: 'Нет токена' });
+    }
+
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        res.json({
+            id: decoded.userId,
+            role: decoded.userRole,
+        })
+    }catch(error){
+        return res.status(401).json({ message: 'Неверный или просроченный токен' });
+    }
+}
+
 module.exports = {
-    getProfile
+    getProfile,
+    Me
 }

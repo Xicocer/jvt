@@ -10,7 +10,7 @@ const addBreed = async (req, res) =>{
             return res.status(400).json({message: 'Имя и тип обязательны'})
         }
 
-        const petType = await prisma.findUnique({
+        const petType = await prisma.pet.findUnique({
             where:{id: petId}
         })
 
@@ -21,11 +21,11 @@ const addBreed = async (req, res) =>{
         await prisma.breed.create({
             data: {
                 name,
-                petTypeId
+                pet_id: petId
             }
         })
 
-        return res.status(201).json(breed)
+        return res.status(201).json({message: 'Порода добавлена'})
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Ошибка добавлния породы'}) 
