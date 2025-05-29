@@ -2,26 +2,43 @@ const { PrismaClient } = require('../generated/prisma/client');
 
 const prisma = new PrismaClient();
 
-const getAllSupportTickets = async (res) =>{
+const getAllSupportTickets = async (req, res) =>{
     try{
-        const tickets = await prisma.support.findMany({
-            include: {
-                user: {
-                    select:{
-                        id: true,
-                        email: true,
-                        first_name: true,
-                        last_name: true,
-                        patronymic: true,
-                    }
-                }
-            },
-            orderBy: {
-               created_at: 'desc' 
-            }
-        })
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
 
-        res.status(200).json(tickets)
+    const [tickets, total] = await Promise.all([
+      prisma.support.findMany({
+        skip: offset,
+        take: limit,
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              first_name: true,
+              last_name: true,
+              patronymic: true,
+            }
+          }
+        },
+        orderBy: {
+          created_at: 'desc'
+        }
+      }),
+      prisma.support.count()
+    ])
+
+    res.status(200).json({
+      data: tickets,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit)
+      }
+    })
     }catch(error){
         console.error('Ошибка получения тикетов: ', error)
         res.status(500).json({message:"Ошибка сервера"})
