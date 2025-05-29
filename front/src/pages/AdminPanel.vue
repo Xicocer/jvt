@@ -24,7 +24,7 @@
     </v-navigation-drawer>
 
     <v-main class="main-content" ref="content" @scroll.passive="handleScroll">
-      <v-container fluid class="pa-0 fill-height">
+      <v-container fluid class="pa-0 fill-height w-100">
         <v-row no-gutters class="fill-height">
           <v-col cols="12" class="fill-height">
             <v-sheet
@@ -34,7 +34,7 @@
               class="section fill-height"
             >
               <v-container class="fill-height">
-                <v-card class="fill-height">
+                <v-card class="fill-height w-100">
                   <v-card-title class="text-h5">
                     <v-icon :icon="item.icon" class="mr-2"></v-icon>
                     {{ item.title }}
@@ -158,6 +158,7 @@ const preventScroll = (e) => {
 
 <style scoped>
 .main-content {
+  width: 100%;
   height: 100vh;
   overflow-y: hidden;
   scroll-behavior: smooth;

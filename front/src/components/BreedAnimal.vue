@@ -1,6 +1,6 @@
 <template>
   <v-container сlass="d-flex">
-    <v-card class="pa-4" max-width="500">
+    <v-card class="pa-4 w-100" >
       <v-card-title>Добавить вид животного</v-card-title>
 
       <v-form @submit.prevent="addType">

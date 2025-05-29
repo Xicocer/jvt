@@ -95,6 +95,41 @@
   </v-container>
 
   <form-pet/>
+
+  <!-- Кнопка поддержки -->
+  <v-btn
+    color="primary"
+    icon
+    class="support-button"
+    @click="supportDialog = true"
+  >
+    <v-icon>mdi-face-agent</v-icon>
+  </v-btn>
+
+  <!-- Модальное окно поддержки -->
+<v-dialog v-model="supportDialog" max-width="500">
+  <v-card>
+    <v-card-title>Обращение в поддержку</v-card-title>
+    <v-card-text>
+      <v-text-field
+        v-model="supportType"
+        label="Тема обращения"
+        required
+      ></v-text-field>
+      <v-textarea
+        v-model="supportMessage"
+        label="Сообщение"
+        auto-grow
+        required
+      ></v-textarea>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn text @click="supportDialog = false">Отмена</v-btn>
+      <v-btn color="primary" @click="sendSupport" :loading="sendingSupport">Отправить</v-btn>
+    </v-card-actions>
+  </v-card>
+</v-dialog>
   
 </template>
 
@@ -241,8 +276,48 @@ const updatePetAge = async (petId) => {
   }
 }
 
+const supportDialog = ref(false)
+const supportType = ref('')
+const supportMessage = ref('')
+const sendingSupport = ref(false)
+
+const sendSupport = async () => {
+  if (!supportType.value || !supportMessage.value) {
+    alert('Заполните тему и сообщение')
+    return
+  }
+
+  sendingSupport.value = true
+  try {
+    await axios.post('/support', {
+      type: supportType.value,
+      message: supportMessage.value
+    })
+
+    alert('Сообщение отправлено в поддержку')
+
+    // Очистка полей
+    supportType.value = ''
+    supportMessage.value = ''
+    supportDialog.value = false
+  } catch (err) {
+    console.error('Ошибка отправки сообщения в поддержку:', err)
+    alert('Ошибка при отправке сообщения')
+  } finally {
+    sendingSupport.value = false
+  }
+}
 // При монтировании компонента — загрузка профиля
 onMounted(() => {
   fetchProfile()
 })
 </script>
+
+<style scoped>
+.support-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
+</style>

@@ -474,13 +474,13 @@ router.delete('/chats', authMidlware, leaveChat)
 router.delete('/animals/:id', adminMidlware, deleteAnimal)
 /**
  * @swagger
- * /breed:id:
+ * /breed/:id:
  *   delete:
  *     summary: Удаление породы (Только для админов)
  *     responses:
  *       200:
  *         description: Успешно
  */
-router.delete('/breed:id', adminMidlware, deleteBreed)
+router.delete('/breed/:id', adminMidlware, deleteBreed)
 
 module.exports = router
