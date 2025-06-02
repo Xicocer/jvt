@@ -49,7 +49,7 @@ const deleteMarker = async (req, res) => {
 
     }catch(error){
         console.error('Ошибка удаления маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
-        res.status(500).json({ message: 'Ошибка удаления маркера' })
+        res.status(500).json({ message: 'Ошибка удаления маркера'})
     }
     
 }
