@@ -19,6 +19,7 @@ declare module 'vue' {
     MainMenu: typeof import('./src/components/MainMenu.vue')['default']
     MapMain: typeof import('./src/components/MapMain.vue')['default']
     MarkerMap: typeof import('./src/components/MarkerMap.vue')['default']
+    MarkerTable: typeof import('./src/components/MarkerTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SupportForm: typeof import('./src/components/SupportForm.vue')['default']

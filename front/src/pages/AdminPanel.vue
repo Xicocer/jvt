@@ -61,6 +61,7 @@ import MarkerMap from '@/components/MarkerMap.vue'
 import SupportForm from '@/components/SupportForm.vue'
 import { components } from 'vuetify/dist/vuetify.js'
 import BreedForm from '@/components/BreedForm.vue'
+import MarkerTable from '@/components/MarkerTable.vue'
 
 
 const menuItems = [
@@ -84,8 +85,14 @@ const menuItems = [
   },
   { 
     id: 'markers', 
-    title: 'Управление маркерами', 
+    title: 'Добавление маркеров', 
     component: MarkerMap,
+    icon: 'mdi-map-marker'
+  },
+  { 
+    id: 'markersDel', 
+    title: 'Удаление маркеров', 
+    component: MarkerTable,
     icon: 'mdi-map-marker'
   },
   {

@@ -76,12 +76,49 @@ const deleteMarker = async (req, res) => {
 // }
 
 const markerList = async (req, res) => {
-    try{
-        const markers = await prisma.MapMarkers.findMany()
-        res.status(200).json(markers)
-    }catch(error){
-        console.error('Ошибка вывода маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
-        res.status(500).json({ message: 'Ошибка вывода маркера' })
+    try {
+        const { page = 1, limit = 10, type } = req.query
+        const skip = (parseInt(page) - 1) * parseInt(limit)
+        const take = parseInt(limit)
+
+        const where = {}
+        if (type) where.type = type
+
+        const [markers, total] = await Promise.all([
+            prisma.MapMarkers.findMany({
+                 select: {
+                    id: true,
+                    name: true,
+                    type: true,
+                    address: true,
+                    latitube: true, // Должны быть Decimal/Float в Prisma
+                    longitube: true,
+                    img: true,
+                    created_at: true
+                 }
+
+            }),
+            prisma.MapMarkers.count({ where })
+        ])
+
+        res.status(200).json({
+            success: true,
+            data: markers,
+            meta: {
+                total,
+                page: parseInt(page),
+                limit: take,
+                totalPages: Math.ceil(total / take)
+            }
+        })
+
+    } catch (error) {
+        console.error('Ошибка получения списка маркеров:', error)
+        res.status(500).json({ 
+            success: false,
+            message: 'Ошибка при получении списка маркеров',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        })
     }
 }
 
