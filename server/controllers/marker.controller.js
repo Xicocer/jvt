@@ -122,11 +122,23 @@ const markerList = async (req, res) => {
     }
 }
 
+const markerForMap = async (req, res) => {
+    try{
+        const markers = await prisma.MapMarkers.findMany()
+        res.status(200).json(markers)
+    }catch(error){
+        console.error('Ошибка вывода маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
+        res.status(500).json({ message: 'Ошибка вывода маркера' })
+    }
+}
+
+
 
 
 
 module.exports = {
     addMarker,
     deleteMarker,
-    markerList
+    markerList,
+    markerForMap
 }

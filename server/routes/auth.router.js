@@ -15,7 +15,7 @@ const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = requi
 const {changeProfile} = require('../controllers/change_profile.controller')
 const {updateAvatar} = require('../controllers/avatar.cotroller')
 const {changePet} = require('../controllers/change_pet.controller')
-const {addMarker, deleteMarker, markerList} = require('../controllers/marker.controller')
+const {addMarker, deleteMarker, markerList, markerForMap} = require('../controllers/marker.controller')
 const {createChat} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
@@ -309,9 +309,19 @@ router.get('/supportList', adminMidlware, getAllSupportTickets)
 router.get('/support/:id', adminMidlware, getTicketById)
 /**
  * @swagger
- * /markers:
+ * /marker:
  *   get:
  *     summary: Выводит маркеры карты
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/marker', markerForMap)
+/**
+ * @swagger
+ * /markers:
+ *   get:
+ *     summary: Выводит маркеры с пагинацией для удаления
  *     responses:
  *       200:
  *         description: Успешно
