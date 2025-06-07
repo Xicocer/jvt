@@ -91,7 +91,7 @@ const markerList = async (req, res) => {
                     name: true,
                     type: true,
                     address: true,
-                    latitube: true, // Должны быть Decimal/Float в Prisma
+                    latitube: true, 
                     longitube: true,
                     img: true,
                     created_at: true
@@ -124,7 +124,18 @@ const markerList = async (req, res) => {
 
 const markerForMap = async (req, res) => {
     try{
-        const markers = await prisma.MapMarkers.findMany()
+        const markers = await prisma.MapMarkers.findMany({
+                    select: {
+                    id: true,
+                    name: true,
+                    type: true,
+                    address: true,
+                    latitube: true, 
+                    longitube: true,
+                    img: true,
+                    created_at: true
+                 }
+        })
         res.status(200).json(markers)
     }catch(error){
         console.error('Ошибка вывода маркера СДЕЛАЙ НАС ЕДИНЫМ: ', error)
