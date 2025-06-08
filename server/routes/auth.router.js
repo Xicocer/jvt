@@ -16,7 +16,7 @@ const {changeProfile} = require('../controllers/change_profile.controller')
 const {updateAvatar} = require('../controllers/avatar.cotroller')
 const {changePet} = require('../controllers/change_pet.controller')
 const {addMarker, deleteMarker, markerList, markerForMap} = require('../controllers/marker.controller')
-const {createChat} = require('../controllers/add_chat.controller')
+const {createChat,  deleteChat, getAllChats, getUserChats, searchChats} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
 const {addBreed, deleteBreed, getBreedById} = require('../controllers/breed.controller')
@@ -204,7 +204,7 @@ router.post('/markers', adminMidlware, mapimg.single('image'), addMarker)
  *       200:
  *         description: Успешно
  */
-router.post('/chats', adminMidlware, createChat)
+router.post('/chats', authMidlware, createChat)
 /**
  * @swagger
  * /chats/:id/join:
@@ -225,7 +225,7 @@ router.post('/chats', adminMidlware, createChat)
  *       200:
  *         description: Успешно
  */
-router.post('/chats/:id/join', authMidlware, insertIntoChat)
+router.post('/chats/:chatId/join', authMidlware, insertIntoChat)
 /**
  * @swagger
  * /addAnimal:
@@ -357,6 +357,43 @@ router.get('/animals', authMidlware, getAllAnimalsWithBreed)
  *         description: Успешно
  */
 router.get('/breed/:id', authMidlware, getBreedById)
+/**
+ * @swagger
+ * /chats:
+ *   get:
+ *     summary: Выводит список чатов пользователя
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/chats', authMidlware, getUserChats)
+/**
+ * @swagger
+ * /chats/search:
+ *   get:
+ *     summary: Поиск чатов по имени
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Имя для поиска в чатах
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/chats/search', authMidlware, searchChats)
+/**
+ * @swagger
+ * /chats:
+ *   get:
+ *     summary: Выводит список всех чатов (только для админов)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/chats/all', authMidlware, getAllChats)
 
 /**
  * @swagger
@@ -471,7 +508,7 @@ router.delete('/markers/:id', adminMidlware, deleteMarker)
  *       200:
  *         description: Успешно
  */
-router.delete('/chats', authMidlware, leaveChat)
+router.delete('/chats/:chatId/leave', authMidlware, leaveChat)
 /**
  * @swagger
  * /animals:id:
@@ -492,5 +529,15 @@ router.delete('/animals/:id', adminMidlware, deleteAnimal)
  *         description: Успешно
  */
 router.delete('/breed/:id', adminMidlware, deleteBreed)
+/**
+ * @swagger
+ * /chats/:id:
+ *   delete:
+ *     summary: Удаление чата (только создатель может удалить)
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.delete('/chats/:id', authMidlware, deleteChat)
 
 module.exports = router

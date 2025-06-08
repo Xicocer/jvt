@@ -30,6 +30,7 @@ model user {
   messages   messages[]
   refresh    refresh[]
   UserChat   UserChat[]
+  chat       chat[]
 }
 
 model MapMarkers {
@@ -71,11 +72,15 @@ model breed {
 }
 
 model chat {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.Text
-  type     Boolean
-  messages messages[]
-  UserChat UserChat[]
+  id          Int        @id @default(autoincrement())
+  name        String     @db.Text
+  type        Boolean
+  description String     @db.Text
+  created_at  DateTime   @default(now())
+  created_by user?     @relation(fields: [created_by_id], references: [id])
+  created_by_id Int?
+  messages    messages[]
+  UserChat    UserChat[]
 }
 
 model messages {
@@ -105,8 +110,9 @@ model support {
 
 model UserChat {
   id      Int   @id @default(autoincrement())
-  user    user? @relation(fields: [user_id], references: [id])
-  user_id Int?
+  user    user @relation(fields: [user_id], references: [id])
+  user_id Int
   chat    chat  @relation(fields: [chat_id], references: [id])
   chat_id Int
+  
 }
