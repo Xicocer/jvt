@@ -359,14 +359,14 @@ router.get('/animals', authMidlware, getAllAnimalsWithBreed)
 router.get('/breed/:id', authMidlware, getBreedById)
 /**
  * @swagger
- * /chats:
+ * /user/chats:
  *   get:
  *     summary: Выводит список чатов пользователя
  *     responses:
  *       200:
  *         description: Успешно
  */
-router.get('/chats', authMidlware, getUserChats)
+router.get('/user/chats', authMidlware, getUserChats)
 /**
  * @swagger
  * /chats/search:

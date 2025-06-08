@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const createChat = async (req, res) => {
     try {
         const { name, type, description } = req.body;
-        const userId = req.user.id; 
+        const userId = req.user.userId; 
 
         if (!name || typeof type !== 'boolean') {
             return res.status(400).json({ message: 'Укажите название и тип (boolean) для чата' });
@@ -105,7 +105,7 @@ const getAllChats = async (req, res) => {
                     select: { UserChat: true }
                 },
                 created_by: {
-                    select: { id: true, name: true }
+                    select: { id: true, first_name: true }
                 }
             }
         });
