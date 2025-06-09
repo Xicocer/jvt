@@ -3,16 +3,16 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card>
-          <v-card-title>Вход</v-card-title>
+          <v-card-title class="text-h4 font-weight-regular text-center">Вход</v-card-title>
           <v-card-text>
             <v-form @submit.prevent="login">
               <v-text-field v-model="email" label="Email" type="email" required />
               <v-text-field v-model="password" label="Пароль" type="password" required />
               <v-alert type="error" v-if="errorMessage" class="mt-2">{{ errorMessage }}</v-alert>
               <v-card-actions class="mt-4">
-                <v-btn color="primary" type="submit" block>Войти</v-btn>
+                <v-btn color="primary" type="submit" variant="tonal" block>Войти</v-btn>
               </v-card-actions>
-              <RouterLink></RouterLink>
+              <p class="text-center"><span class="font-weight-light">Нет аккаунта?</span> <RouterLink to="/register">Зарегестрируйся!</RouterLink></p>
             </v-form>
           </v-card-text>
         </v-card>
@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth.store'
 

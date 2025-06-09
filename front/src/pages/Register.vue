@@ -3,12 +3,12 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card>
-          <v-card-title>Регистрация</v-card-title>
+          <v-card-title class="text-h4 font-weight-regular text-center">Регистрация</v-card-title>
           <v-card-text>
             <v-form ref="formRef" @submit.prevent="register">
               <v-text-field v-model="firstName" label="Имя" />
               <v-text-field v-model="lastName" label="Фамилия" />
-              <v-text-field v-model="patronymic" label="Отчество" />
+              <v-text-field v-model="patronymic" label="Отчество (если есть)" />
               <v-text-field
                 v-model="email"
                 label="Email"
@@ -35,9 +35,10 @@
               >
                 {{ error }}
               </v-alert>
-              <v-btn color="primary" type="submit" class="mt-4" block>
+              <v-btn color="primary" type="submit" class="mt-4" variant="tonal" block>
                 Зарегистрироваться
               </v-btn>
+              <p class="text-center pt-3"><span class="font-weight-light">Есть аккаунт? </span><RouterLink to="/login" >Войди!</RouterLink></p>
             </v-form>
           </v-card-text>
         </v-card>
@@ -50,6 +51,7 @@
 import { ref } from 'vue'
 import router from '@/router'
 import { useAuthStore } from '@/stores/auth.store'
+import { RouterLink } from 'vue-router'
 
 // refs
 const firstName = ref('')

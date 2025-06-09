@@ -8,7 +8,7 @@ const createChat = async (req, res) => {
         const userId = req.user.userId; 
 
         if (!name || typeof type !== 'boolean') {
-            return res.status(400).json({ message: 'Укажите название и тип (boolean) для чата' });
+            return res.status(400).json({ message: 'Укажите название для чата' });
         }
 
         const newChat = await prisma.chat.create({

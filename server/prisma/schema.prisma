@@ -115,5 +115,4 @@ model UserChat {
   chat    chat  @relation(fields: [chat_id], references: [id])
   chat_id Int
   @@unique([user_id, chat_id]) 
-  
 }
