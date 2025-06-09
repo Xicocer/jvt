@@ -143,7 +143,24 @@ const markerForMap = async (req, res) => {
     }
 }
 
+const MarkerClickStatistic = async (req, res) => {
+    const markerId = parseInt(req.params.id);
+    if (isNaN(markerId)) {
+        return res.status(400).json({ message: 'Неверный ID маркера' });
+    }
 
+    try{
+        await prisma.markerClick.create({
+            data:{
+                markerId
+            },
+    })
+        return res.status(200).json({ message: 'Клик по маркеру зарегистрирован' });
+    } catch (error) {
+        console.error('Ошибка при регистрации клика по маркеру:', error);
+        return res.status(500).json({ message: 'Ошибка при регистрации клика по маркеру' });
+    }
+}
 
 
 
@@ -151,5 +168,6 @@ module.exports = {
     addMarker,
     deleteMarker,
     markerList,
-    markerForMap
+    markerForMap,
+    MarkerClickStatistic
 }

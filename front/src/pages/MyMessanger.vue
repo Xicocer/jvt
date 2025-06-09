@@ -256,10 +256,10 @@ const selectChat = (chatId) => {
 }
 
 .chat-item:hover {
-  background-color: #f5f5f5;
+  background-color: #363636;
 }
 
 .selected-chat {
-  background-color: #d0ebff;
+  background-color: #626262;
 }
 </style>

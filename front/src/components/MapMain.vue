@@ -67,8 +67,8 @@ onMounted(fetchMarkers)
   <div class="map-ui-wrapper">
     <!-- Заголовок и инструкции -->
     <div class="map-header" color="dark">
-      <h2>📍 Карта мест для прогулок</h2>
-      <p>Нажмите на значок на карте, чтобы узнать больше.</p>
+      <h2>📍 Карта полезных мест для животных</h2>
+      <p>Нажмите на значок <v-icon color="deep-purple accent-4" size="36">mdi-paw</v-icon>, чтобы узнать больше.</p>
     </div>
 
     <!-- Карта -->
@@ -164,10 +164,6 @@ onMounted(fetchMarkers)
   z-index: 10;
   max-width: 320px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.filter-select {
-  margin-top: 12px;
 }
 
 .custom-marker {

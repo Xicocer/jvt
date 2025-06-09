@@ -15,11 +15,12 @@ const {getAllSupportTickets, getTicketById, resolveTicket, deleteTicket} = requi
 const {changeProfile} = require('../controllers/change_profile.controller')
 const {updateAvatar} = require('../controllers/avatar.cotroller')
 const {changePet} = require('../controllers/change_pet.controller')
-const {addMarker, deleteMarker, markerList, markerForMap} = require('../controllers/marker.controller')
+const {addMarker, deleteMarker, markerList, markerForMap, MarkerClickStatistic} = require('../controllers/marker.controller')
 const {createChat,  deleteChat, getAllChats, getUserChats, searchChats} = require('../controllers/add_chat.controller')
 const {insertIntoChat, leaveChat} = require('../controllers/insert_chat.controller')
 const {addAnimal, deleteAnimal,  getAllAnimalsWithBreed} = require('../controllers/animal.controller')
 const {addBreed, deleteBreed, getBreedById} = require('../controllers/breed.controller')
+const {mostPopularBreed, mostPopularMarker} = require('../controllers/analityc.controller');
 const upload = require('../config/multer');
 const mapimg = require('../config/multer-marker');
 
@@ -50,6 +51,23 @@ const mapimg = require('../config/multer-marker');
  *         description: Успешно
  */
 router.post('/register', register)
+/**
+ * @swagger
+ * /marker/click/:id:
+ *   post:
+ *     summary: Статистика кликов по маркерам
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID маркера
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.post('/marker/click/:id', authMidlware, MarkerClickStatistic)
 /**
  * @swagger
  * /login:
@@ -386,14 +404,37 @@ router.get('/user/chats', authMidlware, getUserChats)
 router.get('/chats/search', authMidlware, searchChats)
 /**
  * @swagger
- * /chats:
+ * /chats/all:
  *   get:
- *     summary: Выводит список всех чатов (только для админов)
+ *     summary: Выводит список всех чатов
  *     responses:
  *       200:
  *         description: Успешно
  */
 router.get('/chats/all', authMidlware, getAllChats)
+/**
+ * @swagger
+ * /mostPopularBreed:
+ *   get:
+ *     summary: Выводит самую популярную породу питомцев
+ *     description: Выводит самую популярную породу питомцев на основе количества питомцев с этой породой
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/mostPopularBreed', adminMidlware, mostPopularBreed)
+/**
+ * @swagger
+ * /mostPopularMarker:
+ *   get:
+ *     summary: Выводит самый популярный маркер на карте
+ *     description: Выводит самый популярный маркер на карте на основе количества кликов по нему
+ *     responses:
+ *       200:
+ *         description: Успешно
+ */
+router.get('/mostPopularMarker', adminMidlware, mostPopularMarker)
+
 
 /**
  * @swagger

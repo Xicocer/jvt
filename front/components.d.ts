@@ -16,6 +16,7 @@ declare module 'vue' {
     ChatForm: typeof import('./src/components/ChatForm.vue')['default']
     FormPet: typeof import('./src/components/FormPet.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    MainAdmin: typeof import('./src/components/MainAdmin.vue')['default']
     MainMenu: typeof import('./src/components/MainMenu.vue')['default']
     MapMain: typeof import('./src/components/MapMain.vue')['default']
     MarkerMap: typeof import('./src/components/MarkerMap.vue')['default']

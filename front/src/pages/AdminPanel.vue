@@ -1,4 +1,6 @@
 <template>
+
+  
   <v-app style="overflow: hidden">
     <v-navigation-drawer
       v-model="drawer"
@@ -59,7 +61,6 @@ import BreedAnimal from '@/components/BreedAnimal.vue'
 import ChatForm from '@/components/ChatForm.vue'
 import MarkerMap from '@/components/MarkerMap.vue'
 import SupportForm from '@/components/SupportForm.vue'
-import { components } from 'vuetify/dist/vuetify.js'
 import BreedForm from '@/components/BreedForm.vue'
 import MarkerTable from '@/components/MarkerTable.vue'
 

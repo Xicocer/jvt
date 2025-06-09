@@ -44,6 +44,7 @@ model MapMarkers {
   user       user?    @relation(fields: [user_id], references: [id])
   user_id    Int?
   created_at DateTime @default(now())
+  MarkerClick MarkerClick[]
 }
 
 model user_pets {
@@ -115,4 +116,13 @@ model UserChat {
   chat    chat  @relation(fields: [chat_id], references: [id])
   chat_id Int
   @@unique([user_id, chat_id]) 
+}
+
+model MarkerClick{
+  id Int     @id @default(autoincrement())
+  MapMarkers MapMarkers @relation(fields: [mapMarkerId], references: [id])
+  mapMarkerId Int
+  clickedAt DateTime @default(now())
+
+  @@index([mapMarkerId])
 }
