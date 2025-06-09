@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AnimalForm: typeof import('./src/components/AnimalForm.vue')['default']
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
+    AppStatistic: typeof import('./src/components/AppStatistic.vue')['default']
     AvatarCrooper: typeof import('./src/components/AvatarCrooper.vue')['default']
     BreedAnimal: typeof import('./src/components/BreedAnimal.vue')['default']
     BreedForm: typeof import('./src/components/BreedForm.vue')['default']

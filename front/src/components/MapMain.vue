@@ -53,6 +53,15 @@ const fetchMarkers = async () => {
 const handleMarkerClick = (marker) => {
   selectedMarker.value = marker
   dialog.value = true
+  trackMarkerClick(marker.id)
+}
+
+const trackMarkerClick = async (markerId) => {
+  try {
+    await axios.post(`/marker/click/${markerId}`)
+  } catch (error) {
+    console.error('Error tracking marker click:', error)
+  }
 }
 
 const filteredMarkers = computed(() => {

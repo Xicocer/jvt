@@ -63,6 +63,7 @@ import MarkerMap from '@/components/MarkerMap.vue'
 import SupportForm from '@/components/SupportForm.vue'
 import BreedForm from '@/components/BreedForm.vue'
 import MarkerTable from '@/components/MarkerTable.vue'
+import AppStatistic from '@/components/AppStatistic.vue'
 
 
 const menuItems = [
@@ -101,7 +102,14 @@ const menuItems = [
     title: 'Поддержка',
     component: SupportForm,
     icon: 'mdi-face-agent'
+  },
+  {
+    id: 'analytics',
+    title: 'Аналитика',
+    component: AppStatistic,
+    icon: 'mdi-chart-bar'
   }
+
 
 ]
 

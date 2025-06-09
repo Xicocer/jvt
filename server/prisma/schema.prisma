@@ -120,9 +120,9 @@ model UserChat {
 
 model MarkerClick{
   id Int     @id @default(autoincrement())
-  MapMarkers MapMarkers @relation(fields: [mapMarkerId], references: [id])
-  mapMarkerId Int
+  MapMarkers MapMarkers @relation(fields: [MapMarkerId], references: [id])
+  MapMarkerId Int
   clickedAt DateTime @default(now())
 
-  @@index([mapMarkerId])
+  @@index([MapMarkerId])
 }
